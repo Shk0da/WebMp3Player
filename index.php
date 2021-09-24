@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Music Collection</title>
-    <!-- Include font -->
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,400i" rel="stylesheet">
-  	<!-- Include Amplitude JS -->
-	  <script type="text/javascript" src="js/amplitude.js"></script>
-	  <!-- Include Style Sheet -->
-	  <link rel="stylesheet" type="text/css" href="css/app.css"/>
+	<title>Music Collection</title>
+	<!-- Include font -->
+	<link href="https://fonts.googleapis.com/css?family=Lato:400,400i" rel="stylesheet">
+	<!-- Include Amplitude JS -->
+	<script type="text/javascript" src="js/amplitude.js"></script>
+	<!-- Include Style Sheet -->
+	<link rel="stylesheet" type="text/css" href="css/app.css"/>
   </head>
   <body>
     <?php
@@ -59,7 +59,6 @@
         <div id="list-screen-footer">
           <div id="list-screen-meta-container">
             <span data-amplitude-song-info="name" class="song-name"></span>
-
             <div class="song-artist-album">
               <span data-amplitude-song-info="artist"></span>
             </div>
@@ -89,7 +88,6 @@
           </div>
           <div id="meta-container">
             <span data-amplitude-song-info="name" class="song-name"></span>
-
             <div class="song-artist-album">
               <span data-amplitude-song-info="artist"></span>
             </div>
@@ -97,33 +95,26 @@
         </div>
         <div id="player-bottom">
           <div id="control-container">
-
             <div id="shuffle-container">
               <div class="amplitude-shuffle amplitude-shuffle-off" id="shuffle"></div>
             </div>
-
             <div id="prev-container">
               <div class="amplitude-prev" id="previous"></div>
             </div>
-
             <div id="play-pause-container">
               <div class="amplitude-play-pause" id="play-pause"></div>
             </div>
-
             <div id="next-container">
               <div class="amplitude-next" id="next"></div>
             </div>
-
             <div id="repeat-container">
               <div class="amplitude-repeat" id="repeat"></div>
             </div>
-
           </div>
 
           <div id="volume-container">
             <img src="img/volume.svg"/><input type="range" class="amplitude-volume-slider" step=".1"/>
           </div>
-
         </div>
       </div>
     </div>
