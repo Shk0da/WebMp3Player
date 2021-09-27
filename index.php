@@ -2,6 +2,8 @@
 <html>
   <head>
 	<title>Music Collection</title>
+  <!-- Include favicon -->
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<!-- Include font -->
 	<link href="https://fonts.googleapis.com/css?family=Lato:400,400i" rel="stylesheet">
 	<!-- Include Amplitude JS -->
@@ -11,19 +13,10 @@
   </head>
   <body>
     <?php
-      function getDirContents($dir, &$results = array()) {
-          $files = scandir($dir);
-          foreach ($files as $key => $value) {
-              $path = $dir . '/' . $value;
-              if (!is_dir($path) && "mp3" == pathinfo($path, PATHINFO_EXTENSION)) {
-                  $results[] = $path;
-              } else if ($value != "." && $value != "..") {
-                  getDirContents($path, $results);
-              }
-          }
-          return $results;
-      } 
-      $songs = getDirContents('songs');
+      include __DIR__ . '/environment.php';
+      include __DIR__ . '/utils.php';
+      $songs = getSongs($playlistName);
+      $songSize = count($songs);
     ?>
     <div id="flat-black-player-container">
       <div id="list-screen" class="slide-in-top">
@@ -32,11 +25,9 @@
           Hide Playlist
         </div>
 
-        <?php $songSize = 0; ?>
         <div id="list">
           <?php
-              $index = 0;
-              foreach ($songs as $mp3) {
+              for ($index = 0; $index <= $songSize - 1; $index++) {
                 echo '
                 <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="' . $index . '">
                   <span class="song-number-now-playing">
@@ -50,8 +41,6 @@
                   <span class="song-duration"><span>
                 </div>
                 '; 
-              $index++;
-              $songSize++;
             }
           ?>
         </div>
@@ -115,6 +104,9 @@
           <div id="volume-container">
             <img src="img/volume.svg"/><input type="range" class="amplitude-volume-slider" step=".1"/>
           </div>
+          <div style="text-align: center;">
+            <a href="refresh.php">Refresh</a>
+          </div>
         </div>
       </div>
     </div>
@@ -128,47 +120,22 @@
         32: 'play_pause'
       },
       "songs": [
-        <?php
-            include __DIR__ . '/lib/getid3/getid3.php';
-
+        <?php            
             $index = 0;
-            foreach ($songs as $mp3) {
-              $fileName = pathinfo($mp3, PATHINFO_FILENAME);
-              $title = $fileName;
-              $artist = "";
-              $album = "";
-              $picture = "img/cover.jpg";
-              
-              $audio = new getID3();
-              $audio->encoding = 'UTF-8';
-              $audio->Analyze($mp3);
-             
-              if ($audio->info['tags'] != null && $audio->info['tags']['id3v2'] != null) {
-                $idv3v2 = $audio->info['tags']['id3v2'];
-                $title = isset($idv3v2['title']) ? $idv3v2['title'][0] : $fileName;
-                $artist = isset($idv3v2['artist']) ? $idv3v2['artist'][0] : "";
-                $album = isset($idv3v2['album']) ? $idv3v2['album'][0] : "";
-
-                if (isset($audio->info['id3v2']) & isset($audio->info['id3v2']['APIC'])) {
-                  $mime = $audio->info['id3v2']['APIC'][0]['image_mime'];
-                  $data = $audio->info['id3v2']['APIC'][0]['data'];
-                  $picture ='data:' . $mime . ';charset=utf-8;base64,' . base64_encode($data);
-                }
-              }
-
+            foreach ($songs as $song) {
+              $info = getInfoMp3($song);
               echo '
               {
-                "name": "' . $title . '",
-                "artist": "' . $artist . '",
-                "album": "' . $album . '",
-                "url": "' . $mp3 . '",
-                "cover_art_url": "' . @$picture . '"
+                "name": "' . $info["title"] . '",
+                "artist": "' . $info["artist"] . '",
+                "album": "' . $info["album"] . '",
+                "url": "' . $info["url"] . '",
+                "cover_art_url": "' . $info["picture"] . '"
               }
               '; 
-              if ($index + 1 < $songSize) {
+              if ($index++ < ($songSize - 1)) {
                 echo ',';
               }
-              $index++;
             }
           ?>
       ]
