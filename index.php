@@ -26,11 +26,7 @@
           <img id="up-arrow" src="img/up.svg"/>
           Hide Playlist
         </div>
-
-        <div>
-              <a href="refresh.php" title="Refresh Playlist"><img class="reload-button" src="img/reload.png"/></a>
-        </div>
-
+        
         <div id="list">
           <?php 
           for ($index = 0; $index <= $songSize - 1; $index++) {
