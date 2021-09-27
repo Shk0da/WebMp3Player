@@ -2,14 +2,16 @@
 <html>
   <head>
 	<title>Music Collection</title>
-  <!-- Include favicon -->
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <!-- Include favicon -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<!-- Include font -->
 	<link href="https://fonts.googleapis.com/css?family=Lato:400,400i" rel="stylesheet">
 	<!-- Include Amplitude JS -->
 	<script type="text/javascript" src="js/amplitude.js"></script>
 	<!-- Include Style Sheet -->
 	<link rel="stylesheet" type="text/css" href="css/app.css"/>
+    <!-- Include viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
     <?php
@@ -25,9 +27,13 @@
           Hide Playlist
         </div>
 
+        <div>
+              <a href="refresh.php" title="Refresh Playlist"><img class="reload-button" src="img/reload.png"/></a>
+        </div>
+
         <div id="list">
-          <?php
-              for ($index = 0; $index <= $songSize - 1; $index++) {
+          <?php 
+          for ($index = 0; $index <= $songSize - 1; $index++) {
                 echo '
                 <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="' . $index . '">
                   <span class="song-number-now-playing">
@@ -43,6 +49,7 @@
                 '; 
             }
           ?>
+      
         </div>
 
         <div id="list-screen-footer">
@@ -61,7 +68,7 @@
       </div>
       <div id="player-screen">
         <div class="player-header down-header">
-          <img id="down" src="img/down.svg"/> Show Playlist
+            <img id="down" src="img/down.svg"/> Show Playlist
         </div>
         <div id="player-top">
           <img data-amplitude-song-info="cover_art_url"/>
@@ -104,9 +111,6 @@
           <div id="volume-container">
             <img src="img/volume.svg"/><input type="range" class="amplitude-volume-slider" step=".1"/>
           </div>
-          <div style="text-align: center;">
-            <a href="refresh.php">Refresh</a>
-          </div>
         </div>
       </div>
     </div>
@@ -130,7 +134,12 @@
                 "artist": "' . $info["artist"] . '",
                 "album": "' . $info["album"] . '",
                 "url": "' . $info["url"] . '",
-                "cover_art_url": "' . $info["picture"] . '"
+                "cover_art_url": "' . $info["picture"] . '",
+                "time_callbacks": {
+                  0: function() {
+                    document.title = "' . $info["title"] . ' - ' . $info["artist"] . ' [' . $info["album"] . ']";
+                  }
+                }
               }
               '; 
               if ($index++ < ($songSize - 1)) {
@@ -138,6 +147,7 @@
               }
             }
           ?>
+      
       ]
     });
   </script>

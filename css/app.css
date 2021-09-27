@@ -141,6 +141,14 @@ div#list-screen {
         margin-left: 15px;
         margin-top: 4px; }
 
+img.reload-button {
+  position: absolute;
+  top: 12px;
+  left: 40px;
+  cursor: pointer;
+  width: 10%;
+}
+
 div.player-header {
   background-color: #141920;
   padding: 15px;

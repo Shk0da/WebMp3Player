@@ -58,7 +58,7 @@ foreach ($songs as $mp3) {
     $artist = str_replace('"', '\"', $artist);
     $album = str_replace('"', '\"', $album);
 
-    $info = "#EXTINF:$time,$artist - $title [$album]\n";
+    $info = "#EXTINF:$time,$artist - $title |$album|\n";
     file_put_contents($playlistName, $info, FILE_APPEND | LOCK_EX);
 
     $song = str_replace(' ', '%20', $mp3);
