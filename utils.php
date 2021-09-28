@@ -45,13 +45,19 @@ function getInfoMp3($song) {
     $mp3Url = $song[1];
     $mp3Info = $song[0];
 
-    $info = preg_split("/[-]+/", $mp3Info);
-    $artist = trim($info[0]);
+    $title = $album = $artist ="Unknown";
 
-    preg_match('/\|(.*?)\|/', $info[1], $match);
-    $title = (isset($match[0])) ? trim(str_replace($match[0], '', $info[1])) : "";
-    $album = (isset($match[1])) ? trim($match[1]) : "";
-              
+    $info = preg_split("/[-]+/", $mp3Info);
+    if (isset($info[0])) {
+      $artist = trim($info[0]);
+    }
+   
+    if (isset($info[1])) {
+      preg_match('/\|(.*?)\|/', $info[1], $match);
+      $title = (isset($match[0])) ? trim(str_replace($match[0], '', $info[1])) : "";
+      $album = (isset($match[1])) ? trim($match[1]) : "";
+    }
+    
     $picture = "img/cover.jpg";
     $coverUrl = str_replace($scheme . '://' . $host . '/' . $webPath, $path, $mp3Url) . ".jpg";
     if (file_exists(str_replace('%20', ' ', $coverUrl))){
@@ -66,5 +72,3 @@ function getInfoMp3($song) {
         "picture" => $picture
     );
 }
-
-?>

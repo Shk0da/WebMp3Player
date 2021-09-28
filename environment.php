@@ -13,5 +13,3 @@ if (isset($_SERVER['REQUEST_URI'])) {
     $scheme = isset($url["scheme"]) ? $url["scheme"] : $scheme;
     $host = isset($url["host"]) ? $url["host"] : (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $host);
 }
-
-?>

@@ -1,5 +1,6 @@
 <?php 
 
+include __DIR__ . '/render.php';
 include __DIR__ . '/environment.php';
 include __DIR__ . '/lib/getid3/getid3.php';
 
@@ -67,6 +68,7 @@ foreach ($songs as $mp3) {
     file_put_contents($playlistName, $song, FILE_APPEND | LOCK_EX);
 }
 
+createIndexPage();
+
 $redirect = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $scheme .'://' . $host;
 header('Refresh: 0; URL=' . $redirect);
-?>
